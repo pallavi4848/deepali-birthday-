@@ -1,1 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
 
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#ffdde1;
+overflow:hidden;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* Floating Hearts */
+.heart{
+position:absolute;
+color:red;
+font-size:20px;
+animation:float 8s linear infinite;
+}
+
+@keyframes float{
+0%{
+transform:translateY(100vh);
+opacity:1;
+}
+100%{
+transform:translateY(-100px);
+opacity:0;
+}
+}
+
+.screen{
+text-align:center;
+width:100%;
+}
+
+/* Welcome Page */
+#welcome img{
+width:250px;
+border-radius:20px;
+box-shadow:0 0 20px rgba(0,0,0,0.3);
+}
+
+button{
+padding:12px 25px;
+border:none;
+background:#ff3366;
+color:white;
+border-radius:10px;
+cursor:pointer;
+margin-top:20px;
+font-size:18px;
+}
+
+/* PIN Screen */
+#lock{
+display:none;
+}
+
+.pin-display{
+font-size:30px;
+letter-spacing:10px;
+margin-bottom:20px;
+}
+
+.keypad{
+display:grid;
+grid-template-columns:repeat(3,80px);
+gap:10px;
+justify-content:center;
+}
+
+.key{
+width:80px;
+height:80px;
+border-radius:50%;
+background:white;
+font-size:25px;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Surprise Page */
+#surprises{
+display:none;
+}
+
+.boxes{
+display:flex;
+gap:20px;
+justify-content:center;
+margin-top:30px;
+}
+
+.gift{
+font-size:70px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.gift:hover{
+transform:scale(1.2);
+}
+
+.message{
+margin-top:20px;
+font-size:22px;
+color:#d6004c;
+font-weight:bold;
+padding:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="hearts"></div>
+
+<!-- Welcome -->
+<div id="welcome" class="screen">
+<img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600" alt="">
+<h1 style="margin-top:20px;color:#ff3366;">Happy Birthday ❤️</h1>
+<button onclick="showLock()">Unlock Surprise</button>
+</div>
+
+<!-- Lock Screen -->
+<div id="lock" class="screen">
+<h2>Enter Secret PIN ❤️</h2>
+
+<div class="pin-display" id="dots">○ ○ ○ ○</div>
+
+<div class="keypad">
+<div class="key" onclick="addNum(1)">1</div>
+<div class="key" onclick="addNum(2)">2</div>
+<div class="key" onclick="addNum(3)">3</div>
+<div class="key" onclick="addNum(4)">4</div>
+<div class="key" onclick="addNum(5)">5</div>
+<div class="key" onclick="addNum(6)">6</div>
+<div class="key" onclick="addNum(7)">7</div>
+<div class="key" onclick="addNum(8)">8</div>
+<div class="key" onclick="addNum(9)">9</div>
+<div class="key"></div>
+<div class="key" onclick="addNum(0)">0</div>
+<div class="key" onclick="clearPin()">⌫</div>
+</div>
+</div>
+
+<!-- Surprise Page -->
+<div id="surprises" class="screen">
+<h1 style="color:#ff3366;">Your Birthday Surprises ❤️</h1>
+
+<div class="boxes">
+<div class="gift" onclick="showMsg(1)">🎁</div>
+<div class="gift" onclick="showMsg(2)">🎁</div>
+<div class="gift" onclick="showMsg(3)">🎁</div>
+</div>
+
+<div class="message" id="message">
+Click any gift box ❤️
+</div>
+</div>
+
+<script>
+
+let pin="";
+const correctPin="1432";
+
+function showLock(){
+document.getElementById("welcome").style.display="none";
+document.getElementById("lock").style.display="block";
+}
+
+function addNum(num){
+
+if(pin.length<4){
+pin+=num;
+
+let dots="";
+for(let i=0;i<pin.length;i++){
+dots+="● ";
+}
+
+for(let i=pin.length;i<4;i++){
+dots+="○ ";
+}
+
+document.getElementById("dots").innerHTML=dots;
+}
+
+if(pin.length===4){
+
+if(pin===correctPin){
+
+setTimeout(()=>{
+document.getElementById("lock").style.display="none";
+document.getElementById("surprises").style.display="block";
+},300);
+
+}else{
+
+alert("Wrong PIN ❤️ Try Again");
+pin="";
+document.getElementById("dots").innerHTML="○ ○ ○ ○";
+}
+}
+}
+
+function clearPin(){
+pin="";
+document.getElementById("dots").innerHTML="○ ○ ○ ○";
+}
+
+function showMsg(num){
+
+const msg=document.getElementById("message");
+
+if(num===1){
+msg.innerHTML="❤️ You are the most beautiful part of my life ❤️";
+}
+
+if(num===2){
+msg.innerHTML="🌹 Wishing you happiness, success and endless smiles 🌹";
+}
+
+if(num===3){
+msg.innerHTML="🎂 Happy Birthday My Love! I Love You Forever ❤️";
+}
+}
+
+/* Hearts */
+
+for(let i=0;i<40;i++){
+
+let heart=document.createElement("div");
+
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*5+5)+"s";
+
+document.body.appendChild(heart);
+}
+
+</script>
+
+</body>
+</html>
